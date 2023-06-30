@@ -1,45 +1,47 @@
 
 const boxColor = ["#3D5AFE", "#8C9EFF", "#2979FF","#29B6F6", "#BBDEFB", "#2962FF", "#283593", "#0277BD", "#0D47A1", "#304FFE"]
+let matchPoint = [5, 10, 15, 20, 25, 30, 35, 40]
+let body = document.querySelector("body")
+//getting elements
 let cell = document.querySelectorAll(".item")
 let result = document.getElementById("result")
-let setTimeout
-
-let target 
-let point = 0
+let celeberat = document.getElementById('my-canvas')
 let modal = document.querySelector(".modal-container")
+let modalText = document.querySelector(".modal-container h3")
 let gameOver = document.querySelector(".modal-container div")
-let modalTex = document.querySelector(".modal-container p")
+let modalScore = document.querySelector(".finalScore")
 let startBtn = document.querySelector("#start")
 let startAgain = document.querySelector(".start")
 let grid = document.querySelector("#grid")
 let container = document.querySelector('.container')
-let matchPoint = [5, 10, 15, 20, 25, 30, 35, 40]
+let info = document.querySelector('.info')
+let setTimeout
+let target 
+let point = 0
 let row = 4
 let width = 5.5
-let cont = document.querySelector(".container")
-let i 
+let i = 0
 let lightenC = 50
-
+let finalTime
 const d = new Date();
 let seconds = d.getSeconds();
+var randomColor = boxColor[Math.floor(Math.random() * boxColor.length)]
 
-let randomColor = boxColor[Math.floor(Math.random() * boxColor.length)] 
+ 
 
 // Stopwatch variables
-var startTime;
-var elapsedTime = 0;
-var timerInterval;
-var display = document.getElementById('display');
-let finalTime = document.getElementById('finalTime')
-
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
+let display = document.getElementById('display');
+let modalTime = document.querySelector('.finalTime')
 display.textContent = '00:00.00';
+
 
 // functions
 
-
-
 function innitialGame(){
-    
+    body.classList.remove("anim")
     point = 0
     i=0
     row = 4
@@ -50,12 +52,13 @@ function innitialGame(){
         box.style.height = `5.5rem`
         box.style.backgroundColor = 'white'
     })
-    cont.style.width = "22.7rem"
-    cont.style.height = "22.7rem"
-    
+    container.style.width = "22.7rem"
+    container.style.height = "22.7rem"
 }
 
+
 function colorize(){
+    
     cell.forEach(item => item.style.backgroundColor = randomColor)
     target = Math.floor(Math.random() * cell.length)
     cell[target].style.backgroundColor = lightenColor(randomColor, lightenC)
@@ -79,74 +82,72 @@ function colorize(){
         if (point === matchPoint[i] ) levelUp()
         else colorize()  
     }
-
- 
-    // add column
+   
+    // next level
     function levelUp(){
+        if (lightenC > 10) 
+        {lightenC = lightenC - 5}
         colorize()
         i++
         row ++
-        for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
-            let newDiv = document.createElement("div")
-            newDiv.className = "item"
-            grid.appendChild(newDiv)
-            newDiv.style.width = `${width - 1}rem`
-            newDiv.style.height = `${width - 1}rem`
-            newDiv.style.backgroundColor = randomColor
-            if (i === 1){
-                lightenC = 40
-               
-            } else if (i===2){
-                lightenC = 40
-                cont.style.width = "23.5rem"
-                cont.style.height = "23.5rem"
+           if (i===2){
+                for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
+                    let newDiv = document.createElement("div")
+                    newDiv.className = "item"
+                    grid.appendChild(newDiv)
+                    newDiv.style.width = `${width - 1}rem`
+                     newDiv.style.height = `${width - 1}rem`
+                    newDiv.style.backgroundColor = randomColor
+                }
+                 
+                container.style.width = "23.5rem"
+                container.style.height = "23.5rem"
                 cell.forEach((box) => {
                     box.style.width = `${width - 1}rem`
-                    box.style.height = `${width - 1}rem`
-                    
+                    box.style.height = `${width - 1}rem`   
                 })
-            
-            }else if (i===3){
-                lightenC = 35
             }else if (i===4){
-                lightenC = 35
-                cont.style.width = "28.2rem"
-                cont.style.height = "28.2rem"
-                
-            }else if(i===5){
-                lightenC = 30
+                body.classList.add("anim")
+               
             }else if(i===6){
-                lightenC = 30
-                cont.style.width = "32.8rem"
-                cont.style.height = "32.8rem"
-            }else if(i===7){
-                lightenC = 20
+                
+                
+            }else if (i === 8){
+                celebration()  
             }
-    }  
+      
             
             
     }
     
     function loseGame(){
         stop() 
+        formatTime(elapsedTime)
         modal.style.display = "block"
         gameOver.classList.add("gameOver")
-        modalTex.innerText = "Your score is:" + point
-        finalTime.textContent = formatTime(elapsedTime);
+        gameOver.style.backgroundColor= 'red'
+        container.style.visibility = 'hidden'
+        info.style.visibility = 'hidden'
+        modalScore.innerText = "score:  " + point
+        modalText.innerText = "Game Over"
+        modalTime.textContent = "Time: "+ finalTime;
         reset()
     }
-
+   
+//buttons
     startBtn.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
         modal.style.display = "none"
         innitialGame()
         start()
         colorize()
-
     })
     startAgain.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
-        modal.style.display = "none"
+        modal.style.display = "none";
+        celeberat.style.visibility = "hidden";
+        container.style.visibility = 'visible'
+        info.style.visibility = 'visible'
         reset()
         innitialGame()
 
@@ -158,7 +159,7 @@ function colorize(){
     }
 
 
-    // stop watch
+// Stop watch
 
 // Stop the stopwatch
 function start() {
@@ -193,16 +194,26 @@ function reset() {
     var minutes = Math.floor((time % 3600000) / 60000);
     var seconds = Math.floor((time % 60000) / 1000);
     var milliseconds = Math.floor ((time % 1000)/10);
-  
-    return (
-     
-      pad(minutes, 2) +
-      ':' +
-      pad(seconds, 2) +
-      '.' +
-      pad(milliseconds, 2)
-    );
-  }
+    if (minutes > 0){
+
+        finalTime = 
+            
+            pad(minutes, 2) +
+            ':' +
+            pad(seconds, 2) +
+            '.' +
+            pad(milliseconds, 2)
+            ;
+        } else{
+            finalTime = 
+                
+                pad(seconds, 2) +
+                '.' +
+                pad(milliseconds, 2);
+
+        }
+        return finalTime
+        }
   
   // Pad a number with leading zeros
   function pad(number, length) {
@@ -214,8 +225,26 @@ function reset() {
   }
 
 
+// celebrat effect codes
 
+var confettiSettings = { target: 'my-canvas' };
+var confetti = new ConfettiGenerator(confettiSettings);
+confetti.render();
 
+function celebration(){
+    modal.style.display = "block"
+    gameOver.classList.add("gameOver")
+    celeberat.style.visibility = "visible"
+    container.style.visibility = 'hidden'
+    info.style.visibility = 'hidden'
+    modalText.innerText = 'congratulations'
+    modalScore.innerText = "Record:  " + finalTime
+    gameOver.style.backgroundColor = "green"
+    modalTime.textContent= ""
+    startAgain.style.backgroundColor= "#fff"
+    startAgain.style.color= "#000"
+
+   }
 
 
 
