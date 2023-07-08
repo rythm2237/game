@@ -1,11 +1,10 @@
-
 const boxColor = ["#3D5AFE", "#8C9EFF", "#2979FF","#29B6F6", "#BBDEFB", "#2962FF", "#283593", "#0277BD", "#0D47A1", "#304FFE"]
 let matchPoint = [5, 10, 15, 20, 25, 30, 35, 40]
 let body = document.querySelector("body")
 //getting elements
 let cell = document.querySelectorAll(".item")
 let result = document.getElementById("result")
-let celeberat = document.getElementById('my-canvas')
+let confe = document.getElementById('my-canvas')
 let modal = document.querySelector(".modal-container")
 let modalText = document.querySelector(".modal-container h3")
 let gameOver = document.querySelector(".modal-container div")
@@ -27,7 +26,12 @@ const d = new Date();
 let seconds = d.getSeconds();
 var randomColor = boxColor[Math.floor(Math.random() * boxColor.length)]
 
- 
+//form variables
+
+let form = document.querySelector(".form")
+let name = document.querySelector("#name").value
+let submitBtn = document.querySelector("#submit")
+submitBtn.addEventListener("click", validation)
 
 // Stopwatch variables
 let startTime;
@@ -39,7 +43,9 @@ display.textContent = '00:00.00';
 
 
 // functions
-
+function validation(){
+    console.log(name)
+}
 function innitialGame(){
     body.classList.remove("anim")
     point = 0
@@ -145,7 +151,7 @@ function colorize(){
     startAgain.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
         modal.style.display = "none";
-        celeberat.style.visibility = "hidden";
+        confetti.style.visibility = "hidden";
         container.style.visibility = 'visible'
         info.style.visibility = 'visible'
         reset()
@@ -234,7 +240,7 @@ confetti.render();
 function celebration(){
     modal.style.display = "block"
     gameOver.classList.add("gameOver")
-    celeberat.style.visibility = "visible"
+    confe.style.visibility = "visible"
     container.style.visibility = 'hidden'
     info.style.visibility = 'hidden'
     modalText.innerText = 'congratulations'

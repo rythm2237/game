@@ -121,8 +121,7 @@
     color: aliceblue;
     box-shadow: 2px 2px 5px hsl(0, 0%, 27%);
     border-radius: .5rem;
-    cursor: pointer;
-    
+    cursor: pointer;   
 }
 .modal-container{
     display: none;
@@ -136,8 +135,8 @@
     height: 100vh;
     /* z-index: 10000; */
     visibility: hidden;
-    
-}.popup{
+}
+.popup{
     border: 1px solid red;
     width: 50%;
     display: flex;
@@ -155,4 +154,22 @@
     background-color: #9c1ae8;
     color: #fff;
     visibility: hidden;
+}
+
+.form{
+    display: flex;
+    flex-direction: row;
+    gap: .3rem;
+    justify-content: center;
+}
+#name{
+    padding: .3rem;
+    border-radius: .3rem;
+    box-shadow: 1px 1px 5px #444;
+
+}
+#submit{
+    padding: .3rem;
+    border-radius: .3rem;
+    box-shadow: 1px 1px 5px #444;
 }
