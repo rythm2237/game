@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="./style.css" type="text/css"/>
 </head>
 <body> 
-    <div class="info">
+    <form class="info form">
+        <input type="text" id="name" placeholder="What is your name?">
+        <button id="submit">Submit</button>
+    </form>
+    <div class="info detals">
         <h3 id="display"></h3>
         <h3 id="score">Score <span id="result">0</span></h3>
         <button id="start">Start</button>
@@ -32,14 +36,18 @@
             <div class="item"></div>
         </div>
     </div>
+    <canvas id="my-canvas">
+        <p class="finalScore"></p>
+    </canvas>  
     <section class="modal-container">
         <div >
             <h3>Game Over</h3>
-            <p></p>
+            <p class="finalScore"></p>
             <p id="finalTime"></p>
             <button class="start">Start again</button>
         </div>
-    </section>   
-<script src="./app.js"></script>
+    </section> 
+    <script src="./index.min.js"></script>
+    <script src="./app.js"></script>
 </body>
 </html>

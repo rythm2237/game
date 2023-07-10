@@ -1,11 +1,10 @@
-
 const boxColor = ["#3D5AFE", "#8C9EFF", "#2979FF","#29B6F6", "#BBDEFB", "#2962FF", "#283593", "#0277BD", "#0D47A1", "#304FFE"]
 let matchPoint = [5, 10, 15, 20, 25, 30, 35, 40]
 let body = document.querySelector("body")
 //getting elements
 let cell = document.querySelectorAll(".item")
 let result = document.getElementById("result")
-let celeberat = document.getElementById('my-canvas')
+let confe = document.getElementById('my-canvas')
 let modal = document.querySelector(".modal-container")
 let modalText = document.querySelector(".modal-container h3")
 let gameOver = document.querySelector(".modal-container div")
@@ -15,6 +14,8 @@ let startAgain = document.querySelector(".start")
 let grid = document.querySelector("#grid")
 let container = document.querySelector('.container')
 let info = document.querySelector('.info')
+let infoDetals = document.querySelector('.detals')
+// let popup = document.querySelector(".popup")
 let setTimeout
 let target 
 let point = 0
@@ -27,19 +28,24 @@ const d = new Date();
 let seconds = d.getSeconds();
 var randomColor = boxColor[Math.floor(Math.random() * boxColor.length)]
 
- 
+//form variables
+let form = document.querySelector(".form")
+let name = document.querySelector("#name").value
+let submitBtn = document.querySelector("#submit")
+submitBtn.addEventListener("click", validation)
 
 // Stopwatch variables
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
 let display = document.getElementById('display');
-let modalTime = document.querySelector('.finalTime')
+let modalTime = document.querySelector('#finalTime')
 display.textContent = '00:00.00';
 
-
 // functions
-
+function validation(){
+    console.log(name)
+}
 function innitialGame(){
     body.classList.remove("anim")
     point = 0
@@ -55,7 +61,6 @@ function innitialGame(){
     container.style.width = "22.7rem"
     container.style.height = "22.7rem"
 }
-
 
 function colorize(){
     
@@ -91,6 +96,7 @@ function colorize(){
         i++
         row ++
            if (i===2){
+            
                 for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
                     let newDiv = document.createElement("div")
                     newDiv.className = "item"
@@ -113,11 +119,9 @@ function colorize(){
                 
                 
             }else if (i === 8){
+                body.classList.remove("anim")
                 celebration()  
-            }
-      
-            
-            
+            }            
     }
     
     function loseGame(){
@@ -126,18 +130,19 @@ function colorize(){
         modal.style.display = "block"
         gameOver.classList.add("gameOver")
         gameOver.style.backgroundColor= 'red'
-        container.style.visibility = 'hidden'
-        info.style.visibility = 'hidden'
+        container.style.display = "none"
+        info.style.display = "none"
+        infoDetals.style.display = "none"
         modalScore.innerText = "score:  " + point
         modalText.innerText = "Game Over"
-        modalTime.textContent = "Time: "+ finalTime;
+        modalTime.innerText = "Time: "+ finalTime;
         reset()
     }
    
 //buttons
     startBtn.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
-        modal.style.display = "none"
+        // modal.style.display = "none"
         innitialGame()
         start()
         colorize()
@@ -145,33 +150,30 @@ function colorize(){
     startAgain.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
         modal.style.display = "none";
-        celeberat.style.visibility = "hidden";
-        container.style.visibility = 'visible'
-        info.style.visibility = 'visible'
+        confe.style.display = "none";
+        // modal.style.visibility = "hiden"
+        container.style.display = 'block'
+        info.style.display = 'flex'
+        infoDetals.style.display = "flex"
+
         reset()
         innitialGame()
 
     })
 
-    
     function lightenColor(color, amount){ 
         return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
     }
-
-
 // Stop watch
 
-// Stop the stopwatch
 function start() {
   startTime = Date.now() - elapsedTime;
   timerInterval = setInterval(updateTime, 10);
   startBtn.disabled = true;
-//   stopButton.disabled = false;
 }
 function stop() {
     clearInterval(timerInterval);
     startBtn.disabled = false;
-    // stopButton.disabled = true;
   }
 // Reset the stopwatch
 function reset() {
@@ -179,17 +181,14 @@ function reset() {
     display.textContent = '00:00.00';
     elapsedTime = 0;
     startBtn.disabled = false;
-  //   stopButton.disabled = true;
   }
-  
   // Update the stopwatch display
   function updateTime() {
     var now = Date.now();
     elapsedTime = now - startTime;
     display.textContent = formatTime(elapsedTime);
   }
-
-  // Format the elapsed time as HH:MM:SS.sss
+  // Format the elapsed time as MM:SS.sss
   function formatTime(time) {
     var minutes = Math.floor((time % 3600000) / 60000);
     var seconds = Math.floor((time % 60000) / 1000);
@@ -224,27 +223,26 @@ function reset() {
     return str;
   }
 
-
 // celebrat effect codes
-
 var confettiSettings = { target: 'my-canvas' };
 var confetti = new ConfettiGenerator(confettiSettings);
 confetti.render();
-
 function celebration(){
-    modal.style.display = "block"
-    gameOver.classList.add("gameOver")
-    celeberat.style.visibility = "visible"
-    container.style.visibility = 'hidden'
-    info.style.visibility = 'hidden'
-    modalText.innerText = 'congratulations'
-    modalScore.innerText = "Record:  " + finalTime
-    gameOver.style.backgroundColor = "green"
-    modalTime.textContent= ""
+formatTime(elapsedTime)
+modal.style.display = "block"
+gameOver.classList.add("gameOver")
+gameOver.style.backgroundColor = "green"
+confe.style.display = "block"
+container.style.display = 'none'
+info.style.display = 'none'
+infoDetals.style.display = 'none'
+modalText.innerText = 'congratulations'
+// modalScore.textContent = `Record: ${finalTime}`
+modalTime.textContent= `Yor Final Record: ${finalTime}`
     startAgain.style.backgroundColor= "#fff"
     startAgain.style.color= "#000"
-
-   }
+    reset()
+}
 
 
 
