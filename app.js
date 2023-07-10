@@ -14,6 +14,7 @@ let startAgain = document.querySelector(".start")
 let grid = document.querySelector("#grid")
 let container = document.querySelector('.container')
 let info = document.querySelector('.info')
+let infoDetals = document.querySelector('.detals')
 // let popup = document.querySelector(".popup")
 let setTimeout
 let target 
@@ -130,6 +131,7 @@ function colorize(){
         gameOver.style.backgroundColor= 'red'
         container.style.display = "none"
         info.style.display = "none"
+        infoDetals.style.display = "none"
         modalScore.innerText = "score:  " + point
         modalText.innerText = "Game Over"
         modalTime.innerText = "Time: "+ finalTime;
@@ -151,6 +153,8 @@ function colorize(){
         modal.style.visibility = "hiden"
         container.style.display = 'block'
         info.style.display = 'flex'
+        infoDetals.style.display = "flex"
+
         reset()
         innitialGame()
 
@@ -222,7 +226,7 @@ function reset() {
 var confettiSettings = { target: 'my-canvas' };
 var confetti = new ConfettiGenerator(confettiSettings);
 confetti.render();
-
+formatTime()
 function celebration(){
     modal.style.display = "block"
     gameOver.classList.add("gameOver")
@@ -231,7 +235,9 @@ function celebration(){
     modal.style.visibility = "visible"
     container.style.display = 'none'
     info.style.display = 'none'
+    infoDetals.style.display = 'none'
     modalText.innerText = 'congratulations'
+    
     modalScore.innerText = "Record:  " + finalTime
     modalTime.textContent= ""
     startAgain.style.backgroundColor= "#fff"
