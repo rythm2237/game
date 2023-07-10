@@ -96,7 +96,7 @@ function colorize(){
         i++
         row ++
            if (i===2){
-            celebration() 
+            
                 for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
                     let newDiv = document.createElement("div")
                     newDiv.className = "item"
@@ -119,6 +119,7 @@ function colorize(){
                 
                 
             }else if (i === 8){
+                body.classList.remove("anim")
                 celebration()  
             }            
     }
@@ -141,7 +142,7 @@ function colorize(){
 //buttons
     startBtn.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
-        modal.style.display = "none"
+        // modal.style.display = "none"
         innitialGame()
         start()
         colorize()
@@ -150,7 +151,7 @@ function colorize(){
         gameOver.classList.remove("gameOver")
         modal.style.display = "none";
         confe.style.display = "none";
-        modal.style.visibility = "hiden"
+        // modal.style.visibility = "hiden"
         container.style.display = 'block'
         info.style.display = 'flex'
         infoDetals.style.display = "flex"
@@ -226,24 +227,22 @@ function reset() {
 var confettiSettings = { target: 'my-canvas' };
 var confetti = new ConfettiGenerator(confettiSettings);
 confetti.render();
-formatTime()
 function celebration(){
-    modal.style.display = "block"
-    gameOver.classList.add("gameOver")
-    gameOver.style.backgroundColor = "green"
-    confe.style.display = "block"
-    modal.style.visibility = "visible"
-    container.style.display = 'none'
-    info.style.display = 'none'
-    infoDetals.style.display = 'none'
-    modalText.innerText = 'congratulations'
-    
-    modalScore.innerText = "Record:  " + finalTime
-    modalTime.textContent= ""
+formatTime(elapsedTime)
+modal.style.display = "block"
+gameOver.classList.add("gameOver")
+gameOver.style.backgroundColor = "green"
+confe.style.display = "block"
+container.style.display = 'none'
+info.style.display = 'none'
+infoDetals.style.display = 'none'
+modalText.innerText = 'congratulations'
+// modalScore.textContent = `Record: ${finalTime}`
+modalTime.textContent= `Yor Final Record: ${finalTime}`
     startAgain.style.backgroundColor= "#fff"
     startAgain.style.color= "#000"
     reset()
-   }
+}
 
 
 
