@@ -14,7 +14,7 @@ let startAgain = document.querySelector(".start")
 let grid = document.querySelector("#grid")
 let container = document.querySelector('.container')
 let info = document.querySelector('.info')
-let infoDetals = document.querySelector('.detals')
+// let infoDetals = document.querySelector('.detals')
 // let popup = document.querySelector(".popup")
 let setTimeout
 let target 
@@ -28,12 +28,42 @@ const d = new Date();
 let seconds = d.getSeconds();
 var randomColor = boxColor[Math.floor(Math.random() * boxColor.length)]
 
+//info window
+let msg = document.querySelector(".info p")
 //form variables
-let form = document.querySelector(".form")
-let name = document.querySelector("#name").value
-let submitBtn = document.querySelector("#submit")
-submitBtn.addEventListener("click", validation)
-
+let welcome = document.querySelector(".welcome")
+let submit = document.querySelector('.submit')
+submit.addEventListener("click", function(){
+    let Name = document.querySelector("#name").value
+    msg.innerText = `Let's go ${Name}`
+    container.style.display="block"
+    welcome.style.display="none"
+    info.style.display= "flex"
+})
+// add score&time window
+let j = 0;
+function changePopup(){
+    if (j===0){
+        info.style.display = "none"
+        container.style.display = "none"
+        gameOver.classList.add("gameOver")
+        modal.style.display = "block"
+        j = 1
+    } else {
+        info.style.display = "flex"
+        gameOver.classList.remove("gameOver")
+        modal.style.display = "none";
+        container.style.display = 'block'
+        j = 0
+    }
+}
+// function getName(){
+//     welcome.innerText= "Welcome"
+//     form.style.display= "flex"
+//     modal.style.display = "none"
+//     container.style.display = "none"
+//     info.style.display = "none"
+//    }
 // Stopwatch variables
 let startTime;
 let elapsedTime = 0;
@@ -43,9 +73,7 @@ let modalTime = document.querySelector('#finalTime')
 display.textContent = '00:00.00';
 
 // functions
-function validation(){
-    console.log(name)
-}
+
 function innitialGame(){
     body.classList.remove("anim")
     point = 0
@@ -96,7 +124,7 @@ function colorize(){
         i++
         row ++
            if (i===2){
-            
+            msg.innerText = `It's great.Keep going ${Name}`
                 for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
                     let newDiv = document.createElement("div")
                     newDiv.className = "item"
@@ -127,18 +155,14 @@ function colorize(){
     function loseGame(){
         stop() 
         formatTime(elapsedTime)
-        modal.style.display = "block"
-        gameOver.classList.add("gameOver")
+        changePopup()
         gameOver.style.backgroundColor= 'red'
-        container.style.display = "none"
-        info.style.display = "none"
-        infoDetals.style.display = "none"
         modalScore.innerText = "score:  " + point
         modalText.innerText = "Game Over"
         modalTime.innerText = "Time: "+ finalTime;
         reset()
     }
-   
+ 
 //buttons
     startBtn.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
@@ -148,14 +172,9 @@ function colorize(){
         colorize()
     })
     startAgain.addEventListener("click", function(){
-        gameOver.classList.remove("gameOver")
-        modal.style.display = "none";
         confe.style.display = "none";
-        // modal.style.visibility = "hiden"
-        container.style.display = 'block'
-        info.style.display = 'flex'
-        infoDetals.style.display = "flex"
-
+        changePopup()
+        msg.innerText = ""
         reset()
         innitialGame()
 
@@ -229,15 +248,11 @@ var confetti = new ConfettiGenerator(confettiSettings);
 confetti.render();
 function celebration(){
 formatTime(elapsedTime)
-modal.style.display = "block"
-gameOver.classList.add("gameOver")
 gameOver.style.backgroundColor = "green"
 confe.style.display = "block"
 container.style.display = 'none'
-info.style.display = 'none'
-infoDetals.style.display = 'none'
+changePopup()
 modalText.innerText = 'congratulations'
-// modalScore.textContent = `Record: ${finalTime}`
 modalTime.textContent= `Yor Final Record: ${finalTime}`
     startAgain.style.backgroundColor= "#fff"
     startAgain.style.color= "#000"

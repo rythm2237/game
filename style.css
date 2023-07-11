@@ -8,7 +8,7 @@
     height: 25rem;
     margin: 2rem auto;
     overflow: hidden;
-    /* display: none; */
+    display: none;
 }
 #grid{
     display: flex;
@@ -56,7 +56,7 @@
 }
 .info{
     margin: .5rem auto;
-    display: flex;
+    display: none;
     flex-direction: column;
     width: 20rem;
     align-content: center;
@@ -152,12 +152,44 @@
     visibility: hidden;
 }
 
-.form{
+.welcome{
+    width: 35%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    background-color: #227277;
+    margin: 20% auto; 
+    padding: .5rem;
+    border-radius: .3rem;
+    box-shadow: 1px 1px 5px #444;
+
+}
+.welcome p{
+    color: #fff;
+}
+.name{
+    padding: .3rem;
+    border-radius: .3rem;
+    
+}
+.submit{
+    padding: .3rem;
+    border-radius: .3rem;
+    cursor: pointer;
+}
+
+/* .form{
+    margin-top: 20%;
+    display: none;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
     gap: .3rem;
     justify-content: center;
-}
+    font-size: 3rem;
+} */
 #name{
     padding: .3rem;
     border-radius: .3rem;
