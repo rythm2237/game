@@ -113,8 +113,7 @@ function colorize(){
         colorize()
         i++
         row ++
-        if (i===2){
-                
+        if (i===2){    
             msg.innerText = `It's great.Keep going ${Name}`
             for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
                 let newDiv = document.createElement("div")
@@ -123,7 +122,7 @@ function colorize(){
                 newDiv.style.width = `${width - 1}rem`
                 newDiv.style.height = `${width - 1}rem`
                 newDiv.style.backgroundColor = randomColor
-            }
+            } 
             
             container.style.width = "23.5rem"
             container.style.height = "23.5rem"
