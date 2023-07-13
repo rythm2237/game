@@ -27,18 +27,22 @@ let finalTime
 const d = new Date();
 let seconds = d.getSeconds();
 var randomColor = boxColor[Math.floor(Math.random() * boxColor.length)]
+let Name=""
+let table = document.querySelector("table")
 
 //info window
 let msg = document.querySelector(".info p")
 //form variables
 let welcome = document.querySelector(".welcome")
 let submit = document.querySelector('.submit')
+
 submit.addEventListener("click", function(){
-    let Name = document.querySelector("#name").value
-    msg.innerText = `Let's go ${Name}`
-    container.style.display="block"
-    welcome.style.display="none"
-    info.style.display= "flex"
+Name = document.querySelector("#name").value
+msg.innerText = `Let's go ${Name}`
+container.style.display="block"
+welcome.style.display="none"
+info.style.display= "flex"
+
 })
 // add score&time window
 let j = 0;
@@ -57,14 +61,7 @@ function changePopup(){
         j = 0
     }
 }
-// function getName(){
-//     welcome.innerText= "Welcome"
-//     form.style.display= "flex"
-//     modal.style.display = "none"
-//     container.style.display = "none"
-//     info.style.display = "none"
-//    }
-// Stopwatch variables
+
 let startTime;
 let elapsedTime = 0;
 let timerInterval;
@@ -124,13 +121,14 @@ function colorize(){
         i++
         row ++
            if (i===2){
+               celebration()  
             msg.innerText = `It's great.Keep going ${Name}`
                 for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
                     let newDiv = document.createElement("div")
                     newDiv.className = "item"
                     grid.appendChild(newDiv)
                     newDiv.style.width = `${width - 1}rem`
-                     newDiv.style.height = `${width - 1}rem`
+                    newDiv.style.height = `${width - 1}rem`
                     newDiv.style.backgroundColor = randomColor
                 }
                  
@@ -246,19 +244,52 @@ function reset() {
 var confettiSettings = { target: 'my-canvas' };
 var confetti = new ConfettiGenerator(confettiSettings);
 confetti.render();
+
 function celebration(){
 formatTime(elapsedTime)
 gameOver.style.backgroundColor = "green"
 confe.style.display = "block"
 container.style.display = 'none'
 changePopup()
+table.classList.add("show")
+table.classList.remove("hiden")
 modalText.innerText = 'congratulations'
 modalTime.textContent= `Yor Final Record: ${finalTime}`
-    startAgain.style.backgroundColor= "#fff"
-    startAgain.style.color= "#000"
-    reset()
+startAgain.style.backgroundColor= "#fff"
+startAgain.style.color= "#000"
+reset()
+ranking()
 }
 
+//save the data to locall storage
+playerNum = 0
+let playerList=[]
+function ranking(){
+    localStorage.setItem(Name, finalTime)
+    let rank = localStorage.getItem(Name)
+    playerList[playerNum] ={key:rank}
+    
+    console.log(localStorage.key(playerNum))
+    console.log(Name)
+    playerNum++
+        console.log(playerList)
+ 
+}
+for(i=0; i<localStorage.length; i++){
+    let key = localStorage.getItem(key(i))
+    if (rank > key)
+    firstName = key(i)
+    firstPoint = rank
+}
+
+
+//ranking table variable
+let firstName = document.querySelector(".first .name")
+let firstPoint = document.querySelector(".first .point")
+let secondName = document.querySelector(".second .name")
+let secondPoint = document.querySelector(".second .point")
+let thirdName = document.querySelector(".third .name")
+let thirdPoint = document.querySelector(".third .point")
 
 
 
