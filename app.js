@@ -167,10 +167,21 @@ function colorize(){
 
     submit.addEventListener("click", function(){
         Name = document.querySelector("#name").value
+        validateName()
+        
+        })
+        let eror = document.querySelector(".welcome p")
+    function validateName(){
+        if (Name.length < 4){
+            eror.innerText = "Your name is not valid"
+            eror.style.color = "red"
+            
+        } else {
         msg.innerText = `Let's go ${Name}`
         welcome.style.display="none"
         changePopup()
-        })
+        }
+    }
 
     function lightenColor(color, amount){ 
         return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
