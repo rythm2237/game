@@ -36,28 +36,21 @@ let msg = document.querySelector(".info p")
 let welcome = document.querySelector(".welcome")
 let submit = document.querySelector('.submit')
 
-submit.addEventListener("click", function(){
-Name = document.querySelector("#name").value
-msg.innerText = `Let's go ${Name}`
-container.style.display="block"
-welcome.style.display="none"
-info.style.display= "flex"
 
-})
 // add score&time window
 let j = 0;
 function changePopup(){
     if (j===0){
-        info.style.display = "none"
-        container.style.display = "none"
-        gameOver.classList.add("gameOver")
-        modal.style.display = "block"
-        j = 1
-    } else {
         info.style.display = "flex"
         gameOver.classList.remove("gameOver")
         modal.style.display = "none";
         container.style.display = 'block'
+        j = 1
+    } else {
+        info.style.display = "none"
+        container.style.display = "none"
+        gameOver.classList.add("gameOver")
+        modal.style.display = "block"
         j = 0
     }
 }
@@ -120,36 +113,32 @@ function colorize(){
         colorize()
         i++
         row ++
-           if (i===2){
-               celebration()  
+        if (i===2){    
             msg.innerText = `It's great.Keep going ${Name}`
-                for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
-                    let newDiv = document.createElement("div")
-                    newDiv.className = "item"
-                    grid.appendChild(newDiv)
-                    newDiv.style.width = `${width - 1}rem`
-                    newDiv.style.height = `${width - 1}rem`
-                    newDiv.style.backgroundColor = randomColor
-                }
-                 
-                container.style.width = "23.5rem"
-                container.style.height = "23.5rem"
-                cell.forEach((box) => {
-                    box.style.width = `${width - 1}rem`
-                    box.style.height = `${width - 1}rem`   
-                })
-            }else if (i===4){
-                body.classList.add("anim")
-               
-            }else if(i===6){
-                
-                
-            }else if (i === 8){
-                body.classList.remove("anim")
-                celebration()  
-            }            
+            for (j=0; j < (Math.pow(row, 2)- (cell.length)); j++){
+                let newDiv = document.createElement("div")
+                newDiv.className = "item"
+                grid.appendChild(newDiv)
+                newDiv.style.width = `${width - 1}rem`
+                newDiv.style.height = `${width - 1}rem`
+                newDiv.style.backgroundColor = randomColor
+            } 
+            
+            container.style.width = "23.5rem"
+            container.style.height = "23.5rem"
+            cell.forEach((box) => {
+                box.style.width = `${width - 1}rem`
+                box.style.height = `${width - 1}rem`   
+            })
+        }else if (i===4){
+            body.classList.add("anim") 
+        }else if(i===6){
+                msg.innerText = `Wow!!! You are wonderfull ${Name}` 
+        }else if (i === 8){
+            body.classList.remove("anim")
+            celebration()  
+        }            
     }
-    
     function loseGame(){
         stop() 
         formatTime(elapsedTime)
@@ -160,7 +149,6 @@ function colorize(){
         modalTime.innerText = "Time: "+ finalTime;
         reset()
     }
- 
 //buttons
     startBtn.addEventListener("click", function(){
         gameOver.classList.remove("gameOver")
@@ -171,12 +159,18 @@ function colorize(){
     })
     startAgain.addEventListener("click", function(){
         confe.style.display = "none";
-        changePopup()
         msg.innerText = ""
+        changePopup()
         reset()
         innitialGame()
-
     })
+
+    submit.addEventListener("click", function(){
+        Name = document.querySelector("#name").value
+        msg.innerText = `Let's go ${Name}`
+        welcome.style.display="none"
+        changePopup()
+        })
 
     function lightenColor(color, amount){ 
         return '#' + color.replace(/^#/, '').replace(/../g, color => ('0'+Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)).substr(-2));
@@ -226,7 +220,6 @@ function reset() {
                 pad(seconds, 2) +
                 '.' +
                 pad(milliseconds, 2);
-
         }
         return finalTime
         }
@@ -249,10 +242,9 @@ function celebration(){
 formatTime(elapsedTime)
 gameOver.style.backgroundColor = "green"
 confe.style.display = "block"
-container.style.display = 'none'
 changePopup()
-table.classList.add("show")
-table.classList.remove("hiden")
+// table.classList.add("show")
+// table.classList.remove("hiden")
 modalText.innerText = 'congratulations'
 modalTime.textContent= `Yor Final Record: ${finalTime}`
 startAgain.style.backgroundColor= "#fff"
@@ -262,25 +254,25 @@ ranking()
 }
 
 //save the data to locall storage
-playerNum = 0
-let playerList=[]
-function ranking(){
-    localStorage.setItem(Name, finalTime)
-    let rank = localStorage.getItem(Name)
-    playerList[playerNum] ={key:rank}
+// playerNum = 0
+// let playerList=[]
+// function ranking(){
+//     localStorage.setItem(Name, finalTime)
+//     let rank = localStorage.getItem(Name)
+//     playerList[playerNum] ={key:rank}
     
-    console.log(localStorage.key(playerNum))
-    console.log(Name)
-    playerNum++
-        console.log(playerList)
+//     console.log(localStorage.key(playerNum))
+//     console.log(Name)
+//     playerNum++
+//         console.log(playerList)
  
-}
-for(i=0; i<localStorage.length; i++){
-    let key = localStorage.getItem(key(i))
-    if (rank > key)
-    firstName = key(i)
-    firstPoint = rank
-}
+// }
+// for(i=0; i<localStorage.length; i++){
+//     let key = localStorage.getItem(key(i))
+//     if (rank > key)
+//     firstName = key(i)
+//     firstPoint = rank
+// }
 
 
 //ranking table variable
